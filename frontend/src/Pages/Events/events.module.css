@@ -1,0 +1,51 @@
+.events {
+  margin-top: 13px;
+}
+
+.top {
+  margin: auto;
+}
+.topWrapper {
+  margin: auto;
+  width: 100%;
+  max-width: 500px;
+  background: rgb(216, 216, 216);
+  font-weight:600;
+  font-size:1.1em;
+  gap:10px;
+  border-radius:5px;
+}
+.eventBtn {
+  flex: 4;
+  padding:3px 10px;
+  position:relative;
+  border:1px solid black;
+  margin:5px;
+  cursor:pointer;
+}
+.eventBtn span{
+
+}
+
+.table{
+padding:10px 50px;
+overflow-x:auto;
+}
+
+table{
+  width:100%;
+  min-width:800px;
+}
+th{
+  background:black;
+  color:#fff;
+}
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
