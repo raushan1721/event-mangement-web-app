@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 function EventDetails() {
   const [data, setData] = useState([]);
   const id = useLocation().pathname.split("/")[3];
+  const link = "http://localhost:3000/event/detail/619e794101e44cd7e0e2aea8";
   useEffect(() => {
     const fetchData = async () => {
       const result = await requestWithToken("GET", "/event/" + id);
@@ -16,7 +17,7 @@ function EventDetails() {
 
   return (
     <div className={styles.eventDetails}>
-      <div className={`${styles.top} d-flex justify-content-between gap-3`}>
+      <div className={`${styles.top} d-flex justify-content-between gap-3 `}>
         <div>
           <p className={styles.title}>{data.title}</p>
           <p className={styles.subtitle}>
@@ -31,12 +32,16 @@ function EventDetails() {
             </span>
           </p>
         </div>
-        <div >
+        <div>
           <div className={styles.link}>
             <p>Copy link to share</p>
-            <div className={`d-flex justify-content-between align-items-center `}>
-                          <p style={{ background: "rgb(234, 234, 234)", marginTop:"5px"}}>hello.com</p>
-              <i class="far fa-copy"></i>
+            <div
+              className={`d-flex justify-content-between align-items-center gap-2`}
+            >
+              <p style={{ background: "rgb(234, 234, 234)", marginTop: "5px" }}>
+                {link}
+              </p>
+              <i className="far fa-copy" style={{fontSize:"1.3em",cursor:"pointer"}}></i>
             </div>
           </div>
         </div>
