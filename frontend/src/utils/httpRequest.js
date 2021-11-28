@@ -31,7 +31,6 @@ export const requestWithToken = async (method, endpoints, body) => {
   let request;
   const url = baseUrl + endpoints;
   const headers = {
-    // "x-auth-token": localStorage.getItem("auth-token"),
     Accept: 'application/json',
     'Content-Type': 'application/json',
     Cache: "no-cache",
@@ -48,7 +47,7 @@ export const requestWithToken = async (method, endpoints, body) => {
       request = await axios.put(url, body, { headers: headers ,withCredentials:true});
       break;
     case "DELETE":
-      request = await axios.delete(url, body, { headers: headers ,withCredentials:true});
+      request = await axios.delete(url, body, { headers: headers},{withCredentials:true});
       break;
     default:
       break;

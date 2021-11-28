@@ -1,44 +1,99 @@
 const router = require("express").Router();
-const passport = require("passport");
+var jwt = require("jsonwebtoken");
+const { OAuth2Client } = require("google-auth-library");
+const jwtSign = require("../utils/jwt-sign");
+const bcrypt = require("bcrypt");
+const client = new OAuth2Client(process.env.CLIENT_ID);
+const config = require("config");
+router.post("/google", async (req, res) => {
+  const token = req.body.token;
+  let gProfile;
 
-const CLIENT_URL = "http://localhost:3000/home";
+  await client
+    .verifyIdToken({ idToken: token, audience: process.env.CLIENT_ID })
+    .then(function (response) {
+      gProfile = response.payload;
+    })
+    .catch(function (error) {
+      console.log(error);
+      return res.status(500).json({ error: "invalid token" });
+    });
 
-
-router.get("/login/failed", (req, res) => {
-
-  res.status(401).json({
-    status: 0,
-    msg: "failure",
-  });
+  if (gProfile.email_verified) {
+    const user = await User.findOne({ email: gProfile.email });
+    if (user) {
+      await jwt.sign(
+        {
+          user: user._id,
+        },
+        config.get("jwtSecret"),
+        { expiresIn: "240h" },
+        (err, token) => {
+          if (err) throw err;
+          if (token) {
+            return res
+              .cookie("access_token", token, {
+                maxAge: 24 * 60 * 60 * 100,
+                httpOnly: true,
+              })
+              .json({
+                status: 1,
+                msg: "logged In",
+                data: {
+                  data: {
+                    user: user._id,
+                    email: user.email,
+                    image: user.image,
+                    name: user.name,
+                  },
+                },
+              });
+          }
+        }
+      );
+    } else {
+      const newUser = {
+        name: gProfile.name,
+        email: gProfile.email,
+      };
+      const salt = await bcrypt.genSalt(10);
+      newUser.password = await bcrypt.hash(gProfile.sub, salt);
+      newUser.image = gProfile.picture;
+      const _user = await new User(newUser).save();
+      await jwt.sign(
+        {
+          user: _user._id,
+        },
+        config.get("jwtSecret"),
+        { expiresIn: "240h" },
+        (err, token) => {
+          if (err) throw err;
+          if (token) {
+            return res
+              .cookie("access_token", token, {
+                maxAge: 24 * 60 * 60 * 100,
+                httpOnly: true,
+              })
+              .json({
+                status: 1,
+                msg: "created and logged In",
+                data: {
+                  user: _user._id,
+                  email: _user.email,
+                  image: _user.image,
+                  name: _user.name,
+                },
+              });
+          }
+        }
+      );
+    }
+  } else {
+    return res.status(200).json({
+      status: 0,
+      msg: "invalid credentials",
+    });
+  }
 });
-
-// router.get("/logout", (req, res) => {
-//   req.logout();
-//   res.redirect(CLIENT_URL);
-// });
-
-// router.get(
-//   "/google",
-//   passport.authenticate("google", { scope: ["profile", "email"] })
-// );
-
-router.get(
-  "/google/callback",
-  passport.authenticate("google", {
-    scope: ["profile", "email"],
-    successRedirect: CLIENT_URL,
-    failureRedirect: "/login/failed",
-  })
-);
-
-// router.get("/facebook", passport.authenticate("facebook", { scope: ["profile"] }));
-
-// router.get(
-//   "/facebook/callback",
-//   passport.authenticate("facebook", {
-//     successRedirect: CLIENT_URL,
-//     failureRedirect: "/login/failed",
-//   })
-// );
 
 module.exports = router;

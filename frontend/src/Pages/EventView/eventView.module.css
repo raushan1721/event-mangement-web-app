@@ -1,65 +1,69 @@
-
-.top{
-width:100%;
+.top {
+  width: 100%;
 }
-.top>div{
-    width:50%;
-    margin:auto;
-    text-align: center;
-}
-
-.title{
-    font-size:2.4em;
-    font-weight:600;
+.top > div {
+  width: max-content;
+  margin: auto;
+  text-align: center;
 }
 
-.info{
-    line-height:20px;
-    font-size:1.3em;
-    font-weight:600;
-    margin-bottom:10px;
+.title {
+  font-size: 2.4em;
+  font-weight: 600;
 }
 
-.link{
-    border:1px solid black;
-    height:40px;
-border-radius:10px;
-line-height:40px;
+.info {
+  line-height: 20px;
+  font-size: 1.3em;
+  font-weight: 600;
+  margin-bottom: 10px;
 }
 
-.button{
-    margin:15px;
+.link {
+background:black;
+color:#fff;
+  height: 30px;
+  border-radius: 4px;
+  line-height: 30px;
+  padding:0 20px;
+cursor:pointer;
 }
 
-.button button{
-    border-radius:3px;
-    border:none;
-    background:black;
-    color:#fff;
-    font-size:1.1em;
-    padding:10px 15px;
-    line-height:18px;
+.button {
+  margin: 10px;
 }
 
-.list{
-    padding:10px 50px;
-    overflow-x:auto;
-    }
-    
-    table{
-      width:100%;
-      min-width:800px;
-    }
-    th{
-      background:black;
-      color:#fff;
-    }
-    td, th {
-      border: 1px solid #dddddd;
-      text-align: left;
-      padding: 8px;
-    }
-    
-    tr:nth-child(even) {
-      background-color: #dddddd;
-    }
+.button button {
+  border-radius: 3px;
+  border: none;
+  background: black;
+  color: #fff;
+  font-size: 1.1em;
+  padding: 10px 15px;
+  line-height: 18px;
+}
+
+.list {
+  padding: 0px 30px;
+  padding-bottom:10px;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  min-width: 800px;
+}
+th {
+  background: black;
+  color: #fff;
+}
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}

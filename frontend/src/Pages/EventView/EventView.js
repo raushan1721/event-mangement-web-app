@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { requestWithToken } from "../../utils/httpRequest";
 import { useLocation } from "react-router-dom";
 import styles from "./eventView.module.css";
+import { Link } from "react-router-dom";
 function EventView() {
   const id = useLocation().pathname.split("/")[2];
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
+  const [tempData, setTempData] = useState([]);
   useEffect(() => {
     const getData = async () => {
       const result = await requestWithToken("GET", "/event/" + id);
@@ -15,10 +17,20 @@ function EventView() {
 
   const handleImport = async () => {
     const result = await requestWithToken("GET", "/guest");
-    data.guests=data.guests.concat(result.data.data);
-    setData(data);
+    setTempData(result.data.data);
   };
 
+  useEffect(() => {
+    setData({ ...data, guests: data.guests?.concat(tempData) });
+  }, [tempData]);
+  const handleAdd = async () => {
+    const guests = [];
+    const eventId = data._id;
+    data.guests.map((d) => guests.push(d._id));
+    await requestWithToken("POST", "/event/guest", { eventId, guests });
+  };
+
+  const handleDelete = () => {};
   return (
     <div className={styles.eventView}>
       <div className={styles.top}>
@@ -32,10 +44,15 @@ function EventView() {
             <span>{data.time}</span>
           </p>
         </div>
-        <div className={styles.link}>asdfadsf</div>
+
+        <div >
+          <Link to={`/event/detail/${id}`} className="link">
+            <div className={styles.link}>dashboard</div>
+          </Link>
+        </div>
       </div>
       <div className={`${styles.button} d-flex justify-content-center gap-3`}>
-        <button>Add guest only for this occasion</button>
+        <button onClick={handleAdd}>Add guest only for this occasion</button>
         <button onClick={(e) => handleImport(e)}>
           + import guests from guestList
         </button>
@@ -49,15 +66,19 @@ function EventView() {
             <th>Address</th>
             <th>members</th>
             <th>del</th>
-            <th>{data.guests?.length}</th>
           </tr>
           {data.guests?.map((d, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
               <td>{d.name}</td>
-              <td>10:02</td>
-              <td>10:02</td>
-              <td>10:02</td>
+              <td>{d.address}</td>
+              <td>{d.members}</td>
+              <td
+                style={{ textAlign: "center", cursor: "pointer" }}
+                onClick={(e) => handleDelete(e, d._id)}
+              >
+                <i class="fas fa-trash"></i>
+              </td>
             </tr>
           ))}
         </table>

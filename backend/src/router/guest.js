@@ -36,7 +36,7 @@ router.put("/:id", Auth, async (req, res) => {
   }
 });
 
-router.delete("/:id", Auth, async (req, res) => {
+router.post("/:id", Auth,async (req, res) => {
   try {
     await Guest.findByIdAndDelete(req.params.id);
     return res.status(200).json({ status: 1, msg: "guest deleted" });

@@ -4,9 +4,7 @@ require("dotenv").config();
 const cookieParser = require("cookie-parser");
 const app = express();
 app.use(express.json({ extended: false }));
-const passportSetup = require("../backend/src/utils/passportsetup");
-const passport = require("passport");
-const cookieSession = require("cookie-session");
+
 const cors = require("cors");
 app.use(
   cors({
@@ -15,13 +13,8 @@ app.use(
     credentials: true,
   })
 );
-app.use(
-  cookieSession({ name: "session", keys: ["lama"], maxAge: 24 * 60 * 60 * 100 })
-);
-app.use(cookieParser());
 
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(cookieParser());
 
 mongoose
   .connect(process.env.mongoURI, {

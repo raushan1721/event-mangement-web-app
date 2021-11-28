@@ -21,7 +21,8 @@ const eventSchema = new Schema(
     time:{
       type: String,
       required:true
-    }
+    },
+    guests: [{ type: Schema.Types.ObjectId, ref: "Guest" }],
   },
   { timestamps: true }
 );

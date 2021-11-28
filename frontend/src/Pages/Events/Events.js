@@ -57,7 +57,7 @@ function Events() {
       </div>
 
       <div className={styles.table}>
-        <table>
+        <table >
           <tr>
             <th>SI.</th>
             <th>Occasion</th>
@@ -71,7 +71,7 @@ function Events() {
               <td><Link to={`/event/${d._id}`}>{d.title}</Link></td>
               <td>{d.address}</td>
               <td>{d.date}</td>
-              <td>10:02</td>
+              <td>{d.time}</td>
             </tr>
           ))}
         </table>

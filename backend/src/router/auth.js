@@ -30,11 +30,12 @@ router.post("/", async (req, res) => {
               .json({
                 status: 1,
                 msg: "logged In",
-                data: { user: user._id, "auth-token": token },
+                data: { user: user._id,email:user.email,image:user.image,name:user.name },
               });    
             }
           }
         );
+
       } else {
         return res.status(200).json({
           status: 0,

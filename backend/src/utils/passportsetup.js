@@ -22,29 +22,7 @@ passport.use(
     },
     function (accessToken, refreshToken, profile, done) {
       const gProfile = profile._json;
-      if (gProfile.email_verified) {
-        User.findOne({ email: gProfile.email }).exec(async (err, user) => {
-          if (err) return res.status(500).json(err);
-          if (user) {
 
-            jwtSign(user, msg = "loggedIn")
-
-          } else {
-            const newUser = {
-              name: gProfile.name,
-              email: gProfile.email,
-              password: gProfile.sub,
-            };
-            const _user = await new User(newUser).save();
-            jwtSign(_user,msg="user created and logged In");
-          }
-        });
-      } else {
-        return res.status(200).json({
-          status: 0,
-          msg: "user created and logged In",
-        });
-      }
       done(null, profile);
     }
   )

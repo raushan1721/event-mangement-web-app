@@ -1,67 +1,53 @@
 import React, { useEffect, useState } from "react";
 import { requestWithToken } from "../../utils/httpRequest";
-import MaterialTable from "material-table";
-import { tableIcons } from "../../components/MaterialTableUtils";
-import styles from './guestList.module.css'
+import { Link } from "react-router-dom";
+import styles from "./guestList.module.css";
 function GuestList() {
   const [guests, setGuests] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const guestList = async () => {
       const result = await requestWithToken("GET", "/guest");
       setGuests(result.data.data);
-      setIsLoading(false);
+      // setIsLoading(false);
     };
     guestList();
   }, []);
-  const columns=[
-    {
-      title: "SI",
-      field: "",
-      cellStyle: {
-        minWidth: 50,
-        width: "10%",
-      }
-    },
-    {
-      title: "Name",
-      field: "name",
-      cellStyle: {
-        minWidth: 200,
-        width: "30%",
-      }
-    },
-    {
-      title: "Address",
-      field: "address",
-      cellStyle: {
-        minWidth: 400,
-        width: "50%",
-      }
-    },
-    {
-      title: "Members",
-      field: "members",
-      cellStyle: {
-        minWidth: 50,
-        width: "10%",
-      }
-    },
-  ]
- 
+
+  const handleDelete = async (e,id) => {
+    e.preventDefault();
+    await requestWithToken("POST","/guest/"+id)
+  };
   return (
     <div className={styles.guests}>
-       <MaterialTable
-        isLoading={isLoading}
-        columns={columns}
-        data={guests}
-        title="Guest List"
-        icons={tableIcons}
-        options={{
-          tableLayout: "auto",
-          maxBodyHeight: "65vh",
-        }}
-      /> 
+      <Link to="/guest/new">
+        <button className={styles.addBtn}>+ Add Guest</button>
+      </Link>
+      <div className={styles.table}>
+        <table>
+          <tr>
+            <th>SI.</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>members</th>
+            <th>del</th>
+          </tr>
+          {guests?.map((d, index) => (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>{d.name}</td>
+              <td>{d.address}</td>
+              <td>{d.members}</td>
+              <td
+                style={{ textAlign: "center", cursor: "pointer" }}
+                onClick={(e) => handleDelete(e, d._id)}
+              >
+                <i class="fas fa-trash"></i>
+              </td>
+            </tr>
+          ))}
+        </table>
+      </div>
     </div>
   );
 }

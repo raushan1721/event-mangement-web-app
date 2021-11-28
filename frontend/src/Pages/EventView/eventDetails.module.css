@@ -1,0 +1,26 @@
+.eventDetails {
+  padding: 10px 50px;
+  width: 100%;
+}
+.top {
+  width: 100%;
+}
+.title {
+  font-size: 3.5rem;
+  font-weight: bolder;
+  text-transform: uppercase;
+  line-height: 3rem;
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.link {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding:10px;
+}
+.link p {
+  border-radius: 5px;
+}

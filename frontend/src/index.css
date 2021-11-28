@@ -16,6 +16,7 @@ code {
 html {
   font-family: "Roboto", sans-serif;
   color:black;
+  text-transform:capitalize;
 }
 
 p {
@@ -38,4 +39,10 @@ li{
 
 .link:hover{
   color:inherit;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

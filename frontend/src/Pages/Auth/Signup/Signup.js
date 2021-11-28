@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import { requestWithToken } from "../../../utils/httpRequest";
 import styles from "../index.module.css";
+import { GoogleLogin } from "react-google-login-include-granted-scopes";
+
 const Signup = () => {
 
   const [form, setForm] = useState({
@@ -11,15 +14,32 @@ const Signup = () => {
 
   const handleInput = (e) => setForm({ ...form, [e.target.name]: e.target.value });
   
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(form);
-    console.log(cpassword)
-  }
+  const handleSubmit = async (e) => {
+      e.preventDefault();
+    if (form.password===cpassword) {
+      const result = await requestWithToken("POST", "/user", form);
+      if (result.data.status === 0) {
+      } else {
+        window.location.replace("/signin");
+      }
+    }
+    else {
+      alert("password not match")
+    }
+    };
   
-  const google = () => {
-    window.open("http://localhost:2000/socialauth/google/callback", "_self");
-  };
+    const google = async (googleData) => {
+      console.log(googleData)
+       const result=await requestWithToken("POST","/socialauth/google", {
+        token: googleData.tokenId,
+      });
+      if (result.data.status === 0) {
+        window.localStorage.setItem("isLoggedIn", false);
+      } else {
+        window.localStorage.setItem("isLoggedIn", true);
+        window.location.replace("/home");
+      }
+    };
 
   const facebook = () => {
     window.open("http://localhost:3000/auth/facebook", "_self");
@@ -52,20 +72,30 @@ const Signup = () => {
             <div className={styles.or}>OR</div>
           </div>
           <div
-            className={`${styles.bottom} d-flex`}
+            className={`${styles.bottom} d-flex flex-column flex-sm-row gap-2`}
             style={{ marginTop: "20px", gap: "10px" }}
           >
-            <div
-              className={`${styles.loginButton} ${styles.google}`}
-              onClick={google}
-            >
-              <img
-                src="https://raw.githubusercontent.com/safak/youtube/react-social-login/client/src/img/google.png"
-                alt=""
-                className="icon"
-              />
-              Google
-            </div>
+            <GoogleLogin
+              clientId={process.env.REACT_APP_CLIENT_ID}
+              render={(renderProps) => (
+                <button
+                  className={`${styles.loginButton} ${styles.google}`}
+                  onClick={renderProps.onClick}
+                  disabled={renderProps.disabled}
+                >
+                  {" "}
+                  <img
+                    src="https://raw.githubusercontent.com/safak/youtube/react-social-login/client/src/img/google.png"
+                    alt=""
+                    className="icon"
+                  />
+                  Google
+                </button>
+              )}
+              onSuccess={google}
+              onFailure={google}
+              cookiePolicy={"single_host_origin"}
+            />
             <div
               className={`${styles.loginButton} ${styles.facebook}`}
               onClick={facebook}
