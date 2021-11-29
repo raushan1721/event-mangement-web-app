@@ -3,7 +3,8 @@ var Schema = mongoose.Schema;
 const eventSchema = new Schema(
   {
     user: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
     title: {
@@ -14,13 +15,13 @@ const eventSchema = new Schema(
       type: String,
       required: true,
     },
-    date:{
+    date: {
       type: String,
-      required:true
+      required: true,
     },
-    time:{
+    time: {
       type: String,
-      required:true
+      required: true,
     },
     guests: [{ type: Schema.Types.ObjectId, ref: "Guest" }],
   },

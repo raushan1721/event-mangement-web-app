@@ -52,7 +52,7 @@ width:100vw;
 .navbar{
   background:black;
   color:#fff;
-  padding:15px 30px;
+  padding:15px;
 }
 .title{
 font-size:1.5em;
@@ -67,4 +67,13 @@ font-size:1.5em;
   padding: 0 30px;
   margin-top: 40px;
 }
+}
+
+@media screen and (max-width: 600px) {
+  .authlayout,.authForm{
+    font-size:70%;
+  }
+  .authOptions ul li {
+    padding: 2px 5px;
+  }
 }

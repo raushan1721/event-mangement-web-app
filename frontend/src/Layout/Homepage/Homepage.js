@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./homepage.module.css";
 import { Link } from "react-router-dom";
 import { requestWithToken } from "../../utils/httpRequest";
 function Homepage(props) {
+  const [showNav, setShowNav] = useState(false);
   const user = JSON.parse(window.localStorage.getItem("user"));
   const handleLogout = async () => {
     const result = await requestWithToken("GET", "/auth/logout");
@@ -17,11 +18,21 @@ function Homepage(props) {
     <div className={styles.homepage}>
       <nav className={styles.navigation}>
         <div className="d-flex justify-content-between align-items-center">
-          <Link to="/home" className="link">
-            <div className={styles.logo}>Coming Or Not</div>
-          </Link>
+          <div className={`d-flex align-items-center gap-3`}>
+            {" "}
+            <i
+              className={`${styles.navToggler} fas fa-bars `}
+              onClick={() => setShowNav(!showNav)}
+            ></i>
+            <div className={styles.logo}>
+              <Link to="/home" className="link">
+                Coming Or Not{" "}
+              </Link>
+            </div>
+          </div>
+
           <div className={styles.navOption}>
-            <ul className="d-flex" style={{ gap: "10px" }}>
+            <ul className="d-flex gap-3">
               <Link to="/guests" className="link">
                 <li>Guest List</li>
               </Link>
@@ -33,7 +44,29 @@ function Homepage(props) {
               </Link>
             </ul>
           </div>
-
+          <div
+            className={`${styles.mobNav}  ${
+              showNav ? styles.showmobNav : styles.hidemobNav
+            }`}
+          >
+            <ul className="d-flex flex-column gap-2 justify-content-center">
+              <Link to="/guests" className="link">
+                <li onClick={() => setShowNav(false)}>
+                  <div>Guest List</div>
+                </li>
+              </Link>
+              <Link to="/events" className="link">
+                <li onClick={() => setShowNav(false)}>
+                  <div>Events</div>
+                </li>
+              </Link>
+              <Link to="/event/create" className="link">
+                <li onClick={() => setShowNav(false)}>
+                  <div>+ Create Event</div>
+                </li>
+              </Link>
+            </ul>
+          </div>
           <div className={styles.profile}>
             <div className="dropdown">
               <div

@@ -14,9 +14,9 @@ function GuestList() {
     guestList();
   }, []);
 
-  const handleDelete = async (e,id) => {
+  const handleDelete = async (e, id) => {
     e.preventDefault();
-    await requestWithToken("POST","/guest/"+id)
+    await requestWithToken("POST", "/guest/" + id);
   };
   return (
     <div className={styles.guests}>
@@ -42,7 +42,7 @@ function GuestList() {
                 style={{ textAlign: "center", cursor: "pointer" }}
                 onClick={(e) => handleDelete(e, d._id)}
               >
-                <i class="fas fa-trash"></i>
+                <i className="fas fa-trash"></i>
               </td>
             </tr>
           ))}

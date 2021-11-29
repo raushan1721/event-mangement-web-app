@@ -30,6 +30,7 @@ app.use("/socialauth", require("./src/router/socialAuth"));
 app.use("/profile", require("./src/router/profile"));
 app.use("/guest", require("./src/router/guest"));
 app.use("/event", require("./src/router/event"));
+app.use("/vote", require("./src/router/votes"));
 
 const PORT = process.env.PORT || 2000;
 app.listen(PORT, () => console.log("server started on " + PORT));

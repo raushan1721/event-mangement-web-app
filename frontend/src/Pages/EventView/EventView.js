@@ -7,6 +7,7 @@ function EventView() {
   const id = useLocation().pathname.split("/")[2];
   const [data, setData] = useState([]);
   const [tempData, setTempData] = useState([]);
+
   useEffect(() => {
     const getData = async () => {
       const result = await requestWithToken("GET", "/event/" + id);
@@ -77,7 +78,7 @@ function EventView() {
                 style={{ textAlign: "center", cursor: "pointer" }}
                 onClick={(e) => handleDelete(e, d._id)}
               >
-                <i class="fas fa-trash"></i>
+                <i className="fas fa-trash"></i>
               </td>
             </tr>
           ))}

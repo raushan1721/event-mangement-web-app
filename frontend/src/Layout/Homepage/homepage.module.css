@@ -1,87 +1,142 @@
-.homepage{
-    width:100vw;
+.homepage {
+  width: 100vw;
 }
-.navigation{
-    background:black;
-    color:#fff;
-    width:100%;
-    padding:10px 30px;
-    position:sticky;
-    top:0;
-    left:0;
-    z-index:1000;
+.navigation {
+  background: black;
+  color: #fff;
+  width: 100%;
+  padding: 10px 30px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 1000;
 }
-
-.logo{
-    font-size:1.5em;
-    font-weight:bolder;
-    letter-spacing: 2px;
+.navToggler {
+  font-size: 1.3em;
+  font-weight: 600;
+  display: none;
+  line-height: 1.3em;
+  cursor:pointer;
 }
-
-.navOption ul li{
-    padding:2px 10px;
-cursor:pointer;
-font-size:1.3em;
-}
-
-.navOption ul li:hover{
-    background:#fff;
-    color:black;
-    border-radius:3px;
+.logo {
+  font-size: 1.5em;
+  font-weight: bolder;
+  letter-spacing: 2px;
 }
 
-.profile{
-    font-size:1.4em;
-    cursor:pointer;
-}
-.profileImage{
-    width:45px;
-    height:45px;
-    border-radius:50%;
-    object-fit: cover;
-    border:1px solid rgba(255, 255, 255, 0.452);
+.navOption ul li {
+  padding: 2px 10px;
+  cursor: pointer;
+  font-size: 1.3em;
 }
 
-.dropdown{
-    padding:10px;
-    background:black;
-    width:max-content;
-    border-radius:3px;
-    color:#fff;
-    cursor:initial;
+.navOption ul li:hover {
+  background: #fff;
+  color: black;
+  border-radius: 3px;
 }
-.innerImage{
-    border-radius:50%;
-    height:70px;
-    width:70px;
-    object-fit: cover;
-    border:1px solid rgba(255, 255, 255, 0.452);
+.mobNav {
+  position: fixed;
+  transition: transform 0.2s;
+  left: 0;
+  width: 100%;
+  background: black;
+  padding: 10px 0 20px 0;
+  z-index:-1;
 }
-.username{
-    font-size:1.3em;
-    font-weight:600;
-    margin-top:10px;
+.hidemobNav{
+    top: 0;
+    transform: translateY(-100%);
 }
-.email{
-    font-size:1.1em;
+.showmobNav{
+    top: 63px;
+    transform: translateY(63);
+}
+.mobNav li {
+  width: 90%;
+  margin: auto;
+}
+.mobNav li > div {
+  margin: auto;
+  width: max-content;
+  padding: 2px 10px;
+  cursor: pointer;
+  font-size: 1.3em;
+}
+.mobNav li:hover {
+  background: #fff;
+  color: black;
+}
+.profile {
+  font-size: 1.4em;
+  cursor: pointer;
+}
+.profileImage {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.452);
+}
 
+.dropdown {
+  padding: 10px;
+  background: black;
+  width: max-content;
+  border-radius: 3px;
+  color: #fff;
+  cursor: initial;
 }
-.dropdown button{
-width:100%;
-height:35px;
-font-size:1.2em;
-color:#fff;
+.innerImage {
+  border-radius: 50%;
+  height: 70px;
+  width: 70px;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.452);
+}
+.username {
+  font-size: 1.3em;
+  font-weight: 600;
+  margin-top: 10px;
+}
+.email {
+  font-size: 1.1em;
+  text-transform: lowercase;
+}
+.dropdown button {
+  width: 100%;
+  height: 35px;
+  font-size: 1.2em;
+  color: #fff;
 
-line-height:1.2em;
-border:none;
-border-radius:3px;
+  line-height: 1.2em;
+  border: none;
+  border-radius: 3px;
+}
+.edit {
+  background: rgb(34, 191, 202);
+  margin-top: 15px;
+}
+.logout {
+  background-color: rgb(255, 94, 0);
+  margin-top: 8px;
+}
 
-}
-.edit{
-    background:rgb(34, 191, 202);
-    margin-top:15px;
-}
-.logout{
-    background-color:rgb(255, 94, 0);
-    margin-top:8px;
+@media screen and (max-width: 800px) {
+  .homepage {
+    font-size: 80%;
+  }
+  .navOption {
+    display: none;
+  }
+  .logo {
+    font-size: 1.3em;
+    font-weight: bolder;
+  }
+  .navigation {
+    padding: 10px 15px;
+  }
+  .navToggler {
+    display: inherit;
+  }
 }

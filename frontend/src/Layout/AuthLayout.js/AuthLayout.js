@@ -10,7 +10,7 @@ function AuthLayout(props) {
             Coming Or Not&nbsp;?
           </div>
           <div className={styles.authOptions}>
-            <ul className="d-flex" style={{ gap: "5px" }}>
+            <ul className="d-flex">
               <Link to="/signin" className="link">
                 <li>SignIn</li>
               </Link>
